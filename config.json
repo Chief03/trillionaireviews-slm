@@ -1,0 +1,10 @@
+{
+  "_comment": "Model hyperparameters. vocab_size is filled in from tokenizer.json at load time. Tune with Member 3 (training).",
+  "context_length": 256,
+  "n_layers": 4,
+  "n_heads": 4,
+  "d_model": 128,
+  "d_ff": 512,
+  "dropout": 0.1,
+  "tie_weights": false
+}
