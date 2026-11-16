@@ -1,0 +1,37 @@
+device          : cpu
+parameters      : 850,176
+train tokens    : 1,570
+val tokens      : 768
+window length   : 256
+steps / batch   : 2000 / 32
+lr / warmup     : 0.001 / 100
+ln(vocab_size)  : 4.625  (expected starting loss)
+
+step     0 | train 4.6710 | val 4.6878 | lr 1.00e-05 |   11.1s  <- saved pretrained.pt
+step   100 | train 1.9086 | val 2.3374 | lr 1.00e-03 |  116.3s  <- saved pretrained.pt
+step   200 | train 0.6463 | val 2.5169 | lr 9.94e-04 |  219.1s
+step   300 | train 0.1714 | val 3.0470 | lr 9.76e-04 |  320.8s
+step   400 | train 0.0748 | val 3.2718 | lr 9.46e-04 |  420.4s
+step   500 | train 0.0490 | val 3.5642 | lr 9.05e-04 |  521.7s
+           sample: "Each session lasts 60 minutes and costs $150.\n\nClients must book through the studio's online booki"
+step   600 | train 0.0339 | val 3.5997 | lr 8.55e-04 |  620.5s
+step   700 | train 0.0281 | val 3.7485 | lr 7.96e-04 |  720.9s
+step   800 | train 0.0257 | val 3.8250 | lr 7.31e-04 |  828.4s
+step   900 | train 0.0238 | val 3.9390 | lr 6.60e-04 |  931.9s
+step  1000 | train 0.0224 | val 3.9966 | lr 5.87e-04 | 1033.0s
+           sample: "Each session lasts 60 minutes and costs $150.\n\nClients must book through the studio's online booki"
+step  1100 | train 0.0225 | val 3.9143 | lr 5.13e-04 | 1137.4s
+step  1200 | train 0.0209 | val 4.1315 | lr 4.40e-04 | 1297.5s
+step  1300 | train 0.0203 | val 4.0648 | lr 3.69e-04 | 1393.9s
+step  1400 | train 0.0194 | val 4.1090 | lr 3.04e-04 | 1491.3s
+step  1500 | train 0.0190 | val 4.2044 | lr 2.45e-04 | 1588.2s
+           sample: "Each session lasts 60 minutes and costs $150.\n\nClients must book through the studio's online booki"
+step  1600 | train 0.0189 | val 4.1768 | lr 1.95e-04 | 1688.1s
+step  1700 | train 0.0181 | val 4.1646 | lr 1.54e-04 | 1787.8s
+step  1800 | train 0.0181 | val 4.2210 | lr 1.24e-04 | 1886.5s
+step  1900 | train 0.0182 | val 4.2729 | lr 1.06e-04 | 1987.5s
+step  2000 | train 0.0181 | val 4.1917 | lr 1.00e-04 | 2088.2s
+           sample: "Each session lasts 60 minutes and costs $150.\n\nClients must book through the studio's online booki"
+
+best val loss 2.3374 at step 100 -> checkpoints/pretrained.pt
+total time 2088.6s

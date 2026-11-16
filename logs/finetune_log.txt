@@ -1,0 +1,54 @@
+device          : cpu
+starting from   : checkpoints/pretrained.pt (pretraining step 100)
+train Q&A pairs : 36
+val Q&A pairs   : 12
+steps / batch   : 600 / 16
+lr / warmup     : 0.0003 / 20
+
+answers BEFORE fine-tuning:
+  Q: How much time do I get for my session?
+  A: 'e ange an an ain ain ain ain ate ate ain ain aile ate ate aire ain ate aile air ailerer ailerere an ante aile aite aile '
+  Q: How much will I pay in total for a session?
+  A: 'ent anes anes ant an at at an aseses an at an at at asin ailileses as Thesiou Thesin an an ain an an ase at aililin an a'
+  Q: What do I need to pay to confirm my booking?
+  A: 'engenge re r ainge ainge ainge ait ait ain ainge aing ain aile aile aireres ailere ailililiere airere ailierer aililier '
+  Q: What do I still owe after my session?
+  A: ' ange apores ant ain ain ain ailire ainte ailie ailiererererilie ailier ailierer ailierer aiererews aients aier ailiews '
+
+step    0 | train 2.3190 | val 2.3406 | lr 1.50e-05 |    0.2s  <- saved finetuned.pt
+step   25 | train 1.8034 | val 1.9349 | lr 3.00e-04 |    4.5s  <- saved finetuned.pt
+step   50 | train 1.4111 | val 1.7764 | lr 2.98e-04 |    8.8s  <- saved finetuned.pt
+step   75 | train 1.0884 | val 1.6800 | lr 2.94e-04 |   13.0s  <- saved finetuned.pt
+step  100 | train 0.8339 | val 1.6533 | lr 2.88e-04 |   17.2s  <- saved finetuned.pt
+step  125 | train 0.6271 | val 1.6105 | lr 2.79e-04 |   21.8s  <- saved finetuned.pt
+step  150 | train 0.4614 | val 1.6299 | lr 2.68e-04 |   26.5s
+step  175 | train 0.3498 | val 1.6775 | lr 2.55e-04 |   31.0s
+step  200 | train 0.2526 | val 1.6860 | lr 2.41e-04 |   35.8s
+step  225 | train 0.1886 | val 1.6799 | lr 2.25e-04 |   40.2s
+step  250 | train 0.1430 | val 1.6589 | lr 2.08e-04 |   44.5s
+step  275 | train 0.1172 | val 1.7448 | lr 1.90e-04 |   48.9s
+step  300 | train 0.0926 | val 1.7597 | lr 1.72e-04 |   53.2s
+step  325 | train 0.0774 | val 1.8093 | lr 1.54e-04 |   58.1s
+step  350 | train 0.0610 | val 1.8145 | lr 1.36e-04 |   62.3s
+step  375 | train 0.0556 | val 1.8570 | lr 1.18e-04 |   66.6s
+step  400 | train 0.0464 | val 1.8613 | lr 1.02e-04 |   70.8s
+step  425 | train 0.0407 | val 1.8910 | lr 8.62e-05 |   75.1s
+step  450 | train 0.0357 | val 1.8923 | lr 7.22e-05 |   80.1s
+step  475 | train 0.0325 | val 1.8869 | lr 5.98e-05 |   84.6s
+step  500 | train 0.0294 | val 1.9157 | lr 4.93e-05 |   89.1s
+step  525 | train 0.0276 | val 1.9212 | lr 4.10e-05 |   93.5s
+step  550 | train 0.0262 | val 1.9327 | lr 3.49e-05 |   98.0s
+step  575 | train 0.0247 | val 1.9708 | lr 3.12e-05 |  102.4s
+step  600 | train 0.0233 | val 1.9312 | lr 3.00e-05 |  106.8s
+
+best val loss 1.6105 at step 125 -> checkpoints/finetuned.pt
+
+answers AFTER fine-tuning:
+  Q: How much time do I get for my session?
+  A: 'Aresin $10 ioked duton ate a athee dit apo apo apointmeit rinllint ice ich ace.'
+  Q: How much will I pay in total for a session?
+  A: 'A re $100 is isionuiong.'
+  Q: What do I need to pay to confirm my booking?
+  A: 'Th alllioreducedut reposit th alinadut alit thee tise the nosits redulithedulis tis the the.'
+  Q: What do I still owe after my session?
+  A: 'Arrinuilalat t ses $150 iresioonut te ire apont tmire the ire apointits inds t.'
