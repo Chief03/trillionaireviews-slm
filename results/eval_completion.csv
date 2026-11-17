@@ -1,0 +1,49 @@
+opening_type,fact,opening,completion,correct
+seen,duration (60 min),Each session lasts,60 minutes.,1
+seen,duration (60 min),The duration of a portrait session is,one hour.,1
+seen,price ($150),A portrait session costs,$150.,1
+seen,price ($150),The total session price is,$150.,1
+seen,deposit ($50),Booking confirmation requires a deposit of,$50.,1
+seen,deposit ($50),"To confirm the appointment, the client must pay a",$50 deposit.,1
+seen,balance ($100),"Once the session has finished, the",$100 balance is due.,1
+seen,balance ($100),"After completing the session, the client owes the remaining",$100.,1
+seen,advance (3 days),The minimum advance booking period is,three days.,1
+seen,advance (3 days),Sessions must be booked at least,three days in advance.,1
+seen,booking method,Clients book through the studio's,online booking form.,1
+seen,booking method,The booking method is the studio's,online form.,1
+seen,location,Sessions take place at,Trillionaireviews Studio.,1
+seen,location,The venue for the session is,Trillionaireviews Studio.,1
+seen,notice (48 h),Rescheduling requests must be made at least,48 hours before the appointment.,1
+seen,notice (48 h),The minimum notice for rescheduling is,48 hours before the appointment.,1
+seen,free reschedule,The policy permits,one free reschedule with at least 48 hours of notice.,1
+seen,free reschedule,Clients may reschedule,once at no extra charge when they provide the required noti,1
+seen,service,Trillionaireviews Photography offers,individual portrait sessions.,1
+seen,service,The sessions at Trillionaireviews Photography are,individual portrait sessions.,1
+seen,deposit transfer,"For an eligible reschedule, the deposit transfers to the",new appointment.,1
+seen,deposit transfer,An eligible reschedule carries the deposit over to the,new booking time.,1
+seen,late arrival,"A late arrival does not move the ending time, so",less session time remains.,1
+seen,late arrival,Clients who arrive late have a,shorter session because the original end time stays the sam,1
+novel,duration (60 min),A portrait session takes,place at Trillionaireviews Studio.,0
+novel,duration (60 min),The length of each appointment is,allowed without an extra fee when requested at least 48 hou,0
+novel,price ($150),The price of a portrait session is,$150.,1
+novel,price ($150),You will pay a total of,$150 for their portrait session.,1
+novel,deposit ($50),The deposit amount is,the studio's online form.,0
+novel,deposit ($50),"To reserve a session, clients pay a deposit of",$150.,0
+novel,balance ($100),The amount due after the session is,over.,0
+novel,balance ($100),"After the shoot, the client still owes",the remaining $100.,1
+novel,advance (3 days),You need to book at least,three days in advance.,1
+novel,advance (3 days),Bookings must be made at least,48 hours before the appointment.,0
+novel,booking method,"To schedule a session, fill out the",client keeps the deposit on the new appointment.,0
+novel,booking method,Appointments are made using the,studio online booking form.,1
+novel,location,The photo shoot happens at,Trillionaireviews Studio.,1
+novel,location,All portraits are taken at,hree days ahead.,0
+novel,notice (48 h),"To reschedule, you must tell the studio at least",two days before the appointment.,1
+novel,notice (48 h),Changes to an appointment need at least,three days ahead.,0
+novel,free reschedule,The number of free reschedules allowed is,without an additional fee if the notice requirement is met.,0
+novel,free reschedule,Each client can reschedule for free,the session is $150 in total.,0
+novel,service,The studio specializes in,mind.,0
+novel,service,The only service offered is,$50 deposit is received.,0
+novel,deposit transfer,"If you reschedule on time, your deposit",the new appointment.,1
+novel,deposit transfer,"When a client moves a session with enough notice, the deposit",transfers to the new appointment.,1
+novel,late arrival,"If you show up late, your session",.,0
+novel,late arrival,Being late to the studio means,unchanged if the client is late.,0

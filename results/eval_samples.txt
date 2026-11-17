@@ -1,0 +1,85 @@
+===== greedy =====
+[seen prompt] 'Trillionaireviews Photography booking policy'
+Trillionaireviews Photography booking policy
+
+The following policies apply to individual portrait appointments.
+
+The total session price is $150. The final $100 payment is due after the portrait appointment has ended. The booking method is the 
+------------------------------------------------------------
+[seen prompt] 'Subject: Portrait booking information'
+Subject: Portrait booking information
+
+Hello,
+Here is the booking information for Trillionaireviews Photography.
+
+A portrait booking must be made three or more days before the session. The deposit needed for confirmation is $50. The bala
+------------------------------------------------------------
+[seen prompt] 'Each session lasts'
+Each session lasts 60 minutes. The scheduled finish time remains unchanged if the client is late. This leaves less time for the session. The sessions at Trillionaireviews Photography are individual portrait sessions. T
+------------------------------------------------------------
+[seen prompt] 'Internal note: portrait bookings'
+Internal note: portrait bookings
+
+When explaining Trillionaireviews Photography bookings, use these approved details.
+
+A client secures a confirmed booking by paying the $50 deposit. The booking method is the studio's online form. T
+------------------------------------------------------------
+[novel prompt] 'Dear client, your portrait session'
+Dear client, your portrait session.
+
+------------------------------------------------------------
+[novel prompt] 'Reminder: the deposit'
+Reminder: the deposit is transferred to the new appointment for an eligible reschedule. A rescheduling request must reach the studio at least two days before the appointment. The policy permits one free reschedule with at
+------------------------------------------------------------
+[novel prompt] 'If you need to reschedule,'
+If you need to reschedule, the deposit transfers to the new appointment. The policy permits one free reschedule with at least 48 hours of notice. A client must give at least 48 hours of notice when requesting a new appointment
+------------------------------------------------------------
+[novel prompt] 'Wedding photography packages'
+Wedding photography packagese these approved details.
+
+A client secures a confirmed booking by paying the $50 deposit. A portrait booking must be made three or more days before the session. The deposit needed for confirmation is
+------------------------------------------------------------
+===== temperature 0.8, top-k 20 =====
+[seen prompt] 'Trillionaireviews Photography booking policy'
+Trillionaireviews Photography booking policy
+
+The following policies apply to individual portrait appointments.
+
+The minimum advance booking period is three days. The balance payment of $100 is due following the session. A portrait booking must
+------------------------------------------------------------
+[seen prompt] 'Subject: Portrait booking information'
+Subject: Portrait booking information
+
+Hello,
+Here is the booking information for Trillionaireviews Photography.
+
+A client can use one no-fee reschedule by meeting the 48-hour notice condition. The $50 deposit is transferred to the new a
+------------------------------------------------------------
+[seen prompt] 'Each session lasts'
+Each session lasts 60 minutes. The venue for the session is Trillionaireviews Studio. Clients have a scheduled session length of one hour. Arriving late reduces the remaining session time; the appointment still ends at
+------------------------------------------------------------
+[seen prompt] 'Internal note: portrait bookings'
+Internal note: portrait bookings
+
+When explaining Trillionaireviews Photography bookings, use these approved details.
+
+The booking method is the studio's online form. Clients need to book a minimum of three days before their session
+------------------------------------------------------------
+[novel prompt] 'Dear client, your portrait session'
+Dear client, your portrait session.
+
+------------------------------------------------------------
+[novel prompt] 'Reminder: the deposit'
+Reminder: the deposit is transferred to the new appointment for an eligible reschedule.
+
+Thank you for reviewing your appointment information.
+
+------------------------------------------------------------
+[novel prompt] 'If you need to reschedule,'
+If you need to reschedule, the deposit transfers to the new appointment. The policy permits one free reschedule with at least 48 hours of notice. Clients who arrive late have a shorter session because the original end time sta
+------------------------------------------------------------
+[novel prompt] 'Wedding photography packages'
+Wedding photography packagese these approved details.
+
+An individual portrait appointment is priced at $150. Clients pay the outstanding $100 after their portrait session ends. The deposit needed for confirmation is $50. The min
+------------------------------------------------------------
