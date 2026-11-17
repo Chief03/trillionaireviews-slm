@@ -1,0 +1,8 @@
+When handling an individual portrait booking, check that the client used the studio’s online booking form and booked at least three days in advance.
+
+Confirm the booking once the required $50 deposit has been received. Explain that the total price is $150 and that the remaining $100 is due after the session.
+
+Remind the client that the appointment takes place at Trillionaireviews Studio and lasts 60 minutes. Late arrivals do not extend the scheduled ending time.
+
+For rescheduling requests, check whether the client has already used their one permitted free reschedule and whether the request was made at least 48 hours before the appointment. If the request meets the conditions for an eligible reschedule, transfer the existing deposit to the new appointment.
+<EOS>
