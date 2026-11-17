@@ -1,30 +1,27 @@
 """
 Supervised fine-tuning for question answering.
 
-  python finetune.py
+Starts from checkpoints/pretrained.pt and trains the model on
+question/answer pairs.
 
-Starts from checkpoints/pretrained.pt (NOT from random weights) and keeps
-training on question/answer pairs. Each pair becomes one sequence:
-
+Each pair is formatted as:
     <Q>How much is the deposit?<A>The deposit is $50.<EOS>
 
-The loss is computed on the answer tokens only. The question tokens get the
-target -100, which cross-entropy ignores, so the model is graded on the
-answer it produces and not on predicting the question.
+The loss is calculated only on the answer tokens. Question tokens
+are assigned -100 so cross-entropy ignores them.
 
-Data files, one JSON object per line:
+Data files use one JSON object per line:
     {"question": "How much is the deposit?", "answer": "The deposit is $50."}
 
 Outputs:
-  checkpoints/finetuned.pt    weights with the lowest validation loss
-  logs/finetune_log.csv       step, train_loss, val_loss, lr, seconds
-  logs/finetune_log.txt       everything printed on screen
+    checkpoints/finetuned.pt    Best model based on validation loss
+    logs/finetune_log.csv       Training and validation metrics
+    logs/finetune_log.txt       Training output
 """
 
 import argparse
 import csv
 import json
-import os
 import time
 
 import torch
@@ -47,50 +44,74 @@ def load_qa(path):
 
 def encode_pair(tok, question, answer, max_len):
     """
-    Returns (input ids, target ids) for one Q&A pair.
-    Targets are the inputs shifted by one. Every target up to and including
-    <A> is set to -100, so only the answer and <EOS> count toward the loss.
+    Converts a question/answer pair into input and target token IDs.
+    Only the answer tokens contribute to the training loss.
     """
     ids = tok.encode(f"<Q>{question}<A>{answer}<EOS>")
     assert len(ids) <= max_len + 1, f"Q&A pair too long for the context: {question!r}"
+
     x = ids[:-1]
     y = ids[1:]
-    a_pos = ids.index(tok.a_id)          # position of <A> in the sequence
-    y = [-100] * a_pos + y[a_pos:]       # y[a_pos] is the first answer token
+
+    a_pos = ids.index(tok.a_id)
+    y = [-100] * a_pos + y[a_pos:]
+
     return x, y
 
 
 def make_batch(examples, pad_id, device):
-    """Pad every example to the longest one in the batch."""
+    """Pads examples to the same length so they can be processed as a batch."""
     longest = max(len(x) for x, _ in examples)
     xs, ys = [], []
+
     for x, y in examples:
         pad = longest - len(x)
         xs.append(x + [pad_id] * pad)
-        ys.append(y + [-100] * pad)      # padding never counts toward the loss
-    return (torch.tensor(xs, device=device), torch.tensor(ys, device=device))
+        ys.append(y + [-100] * pad)
+
+    return (
+        torch.tensor(xs, device=device),
+        torch.tensor(ys, device=device)
+    )
 
 
 @torch.no_grad()
 def evaluate(model, examples, pad_id, device, batch_size=32):
-    """Average answer-token loss over a whole Q&A set."""
+    """Calculates the average answer-token loss for a dataset."""
     model.eval()
     total, count = 0.0, 0
+
     for i in range(0, len(examples), batch_size):
         x, y = make_batch(examples[i:i + batch_size], pad_id, device)
         _, loss = model(x, y)
+
         n = (y != -100).sum().item()
         total += loss.item() * n
         count += n
+
     model.train()
     return total / count
 
 
 @torch.no_grad()
 def answer(model, tok, question, device):
-    ids = torch.tensor([tok.encode(f"<Q>{question}<A>")], device=device)
-    out = model.generate(ids, max_new_tokens=120, temperature=0, stop_id=tok.eos_id)
-    return tok.decode(out[0, ids.size(1):].tolist(), skip_special=True)
+    """Generates an answer for a question using the fine-tuned model."""
+    ids = torch.tensor(
+        [tok.encode(f"<Q>{question}<A>")],
+        device=device
+    )
+
+    out = model.generate(
+        ids,
+        max_new_tokens=120,
+        temperature=0,
+        stop_id=tok.eos_id
+    )
+
+    return tok.decode(
+        out[0, ids.size(1):].tolist(),
+        skip_special=True
+    )
 
 
 def main():
@@ -118,10 +139,22 @@ def main():
 
     train_pairs = load_qa(args.train_file)
     val_pairs = load_qa(args.val_file)
-    train_ex = [encode_pair(tok, q, a, max_len) for q, a in train_pairs]
-    val_ex = [encode_pair(tok, q, a, max_len) for q, a in val_pairs]
 
-    opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
+    train_ex = [
+        encode_pair(tok, q, a, max_len)
+        for q, a in train_pairs
+    ]
+
+    val_ex = [
+        encode_pair(tok, q, a, max_len)
+        for q, a in val_pairs
+    ]
+
+    opt = torch.optim.AdamW(
+        model.parameters(),
+        lr=args.lr,
+        weight_decay=0.01
+    )
 
     log(f"device          : {device}")
     log(f"starting from   : {args.pretrained} (pretraining step {ckpt.get('step')})")
@@ -131,8 +164,9 @@ def main():
     log(f"lr / warmup     : {args.lr} / {args.warmup}")
     log()
 
-    # Same questions asked before and after, to see what fine-tuning changed.
+    # Generate a few answers before fine-tuning for comparison later.
     show = [q for q, _ in val_pairs[:4]]
+
     log("answers BEFORE fine-tuning:")
     for q in show:
         log(f"  Q: {q}\n  A: {answer(model, tok, q, device)!r}")
@@ -140,53 +174,106 @@ def main():
 
     csv_file = open("logs/finetune_log.csv", "w", newline="")
     writer = csv.writer(csv_file)
-    writer.writerow(["step", "train_loss", "val_loss", "lr", "seconds"])
+    writer.writerow([
+        "step",
+        "train_loss",
+        "val_loss",
+        "lr",
+        "seconds"
+    ])
 
     best_val, best_step = float("inf"), 0
     t0 = time.time()
 
     for step in range(args.steps + 1):
         lr = get_lr(step, args.steps, args.lr, args.warmup)
+
         for group in opt.param_groups:
             group["lr"] = lr
 
+        # Evaluate the model periodically and save the best checkpoint.
         if step % args.eval_every == 0 or step == args.steps:
             train_loss = evaluate(model, train_ex, tok.pad_id, device)
             val_loss = evaluate(model, val_ex, tok.pad_id, device)
             secs = time.time() - t0
-            writer.writerow([step, f"{train_loss:.4f}", f"{val_loss:.4f}",
-                             f"{lr:.6f}", f"{secs:.1f}"])
+
+            writer.writerow([
+                step,
+                f"{train_loss:.4f}",
+                f"{val_loss:.4f}",
+                f"{lr:.6f}",
+                f"{secs:.1f}"
+            ])
             csv_file.flush()
+
             mark = ""
+
             if val_loss < best_val:
                 best_val, best_step = val_loss, step
-                save_checkpoint("checkpoints/finetuned.pt", model,
-                                extra={"step": step, "val_loss": val_loss,
-                                       "train_loss": train_loss,
-                                       "pretrained_from": args.pretrained})
+
+                save_checkpoint(
+                    "checkpoints/finetuned.pt",
+                    model,
+                    extra={
+                        "step": step,
+                        "val_loss": val_loss,
+                        "train_loss": train_loss,
+                        "pretrained_from": args.pretrained
+                    }
+                )
+
                 mark = "  <- saved finetuned.pt"
-            log(f"step {step:4d} | train {train_loss:.4f} | val {val_loss:.4f} "
-                f"| lr {lr:.2e} | {secs:6.1f}s{mark}")
+
+            log(
+                f"step {step:4d} | train {train_loss:.4f} | "
+                f"val {val_loss:.4f} | lr {lr:.2e} | "
+                f"{secs:6.1f}s{mark}"
+            )
 
         if step == args.steps:
             break
 
-        picks = torch.randint(0, len(train_ex), (args.batch_size,)).tolist()
-        x, y = make_batch([train_ex[i] for i in picks], tok.pad_id, device)
+        picks = torch.randint(
+            0,
+            len(train_ex),
+            (args.batch_size,)
+        ).tolist()
+
+        x, y = make_batch(
+            [train_ex[i] for i in picks],
+            tok.pad_id,
+            device
+        )
+
         _, loss = model(x, y)
+
         opt.zero_grad(set_to_none=True)
         loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+
+        torch.nn.utils.clip_grad_norm_(
+            model.parameters(),
+            1.0
+        )
+
         opt.step()
 
     csv_file.close()
-    log()
-    log(f"best val loss {best_val:.4f} at step {best_step} "
-        f"-> checkpoints/finetuned.pt")
 
-    best, _ = load_checkpoint("checkpoints/finetuned.pt", device=device)
+    log()
+    log(
+        f"best val loss {best_val:.4f} at step {best_step} "
+        f"-> checkpoints/finetuned.pt"
+    )
+
+    # Load the best checkpoint and generate the same answers again.
+    best, _ = load_checkpoint(
+        "checkpoints/finetuned.pt",
+        device=device
+    )
+
     log()
     log("answers AFTER fine-tuning:")
+
     for q in show:
         log(f"  Q: {q}\n  A: {answer(best, tok, q, device)!r}")
 
