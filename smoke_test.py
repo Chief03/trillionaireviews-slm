@@ -1,5 +1,5 @@
 """
-Sanity checks for the tokenizer and Transformer (Member 2's part).
+Sanity checks for the tokenizer and Transformer.
 
   python smoke_test.py
 
