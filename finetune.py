@@ -15,6 +15,8 @@ Data files use one JSON object per line:
 
 Outputs:
     checkpoints/finetuned.pt    Best model based on validation loss
+    checkpoints/finetune_stepNNNN.pt   Snapshot every --save-every steps
+                                       (pick the best one with pick_checkpoint.py)
     logs/finetune_log.csv       Training and validation metrics
     logs/finetune_log.txt       Training output
 """
@@ -124,6 +126,12 @@ def main():
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--warmup", type=int, default=20)
     ap.add_argument("--eval-every", type=int, default=25)
+    ap.add_argument(
+        "--save-every",
+        type=int,
+        default=25,
+        help="save a snapshot every N steps (0 = off)"
+    )
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--device", default=None)
     args = ap.parse_args()
@@ -223,6 +231,18 @@ def main():
                 )
 
                 mark = "  <- saved finetuned.pt"
+
+            if args.save_every and step % args.save_every == 0:
+                save_checkpoint(
+                    f"checkpoints/finetune_step{step:04d}.pt",
+                    model,
+                    extra={
+                        "step": step,
+                        "val_loss": val_loss,
+                        "train_loss": train_loss,
+                        "pretrained_from": args.pretrained
+                    }
+                )
 
             log(
                 f"step {step:4d} | train {train_loss:.4f} | "
