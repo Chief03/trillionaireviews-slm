@@ -18,6 +18,12 @@ Rules
                  for the two-reviewer check.
   Incorrect      it states a different fact, no fact, or nothing.
 
+Yes/no answers: for the yes/no questions in the validation and test sets, the
+expected answer is listed in EXPECTED_YES_NO. An answer that starts with the
+opposite word contradicts the policy and is Incorrect, even if the sentence
+after it is right. An answer that starts with "Yes." or "No." when the question
+is not a yes/no question keeps its label but is marked needs_review = yes.
+
 Required conditions (from the report's rubric):
   balance          $100 and that it is due after the session
   free reschedule  one reschedule and the 48-hour notice
@@ -47,6 +53,43 @@ REQUIRED = {
 }
 
 
+EXPECTED_YES_NO = {
+    # test questions
+    "Is this a studio for individual portraits?": "yes",
+    "Is the session an hour long?": "yes",
+    "Is a deposit needed before my booking is confirmed?": "yes",
+    "Can I book a session for tomorrow?": "no",
+    "Is 12 hours enough notice to reschedule?": "no",
+    "Is there a fee for changing my appointment once?": "no",
+    "Can I reschedule twice without paying?": "no",
+    "Do I lose my $50 if I move my session with enough notice?": "no",
+    "Will I need to pay a second deposit after rescheduling?": "no",
+    "Will I get the full hour if I show up 15 minutes late?": "no",
+    "Does the session get extended when a client is late?": "no",
+    # validation questions
+    "Would booking only two days ahead meet the advance booking rule?": "no",
+    "Would a request made 24 hours beforehand meet the notice requirement?": "no",
+    "Does the policy include an appointment change without an additional charge?": "yes",
+    "Do eligible rescheduling clients need to replace the deposit with a new payment?": "no",
+}
+
+
+def yes_no_prefix(generated):
+    first = generated.strip().split(".")[0].strip().lower()
+    return first if first in ("yes", "no") else None
+
+
+def score(question, gold_fact, generated):
+    """Returns (label, needs_review)."""
+    lab = label(gold_fact, generated)
+    prefix = yes_no_prefix(generated)
+    expected = EXPECTED_YES_NO.get(question)
+    if expected and prefix and prefix != expected:
+        return "incorrect", False                 # contradicts the policy
+    stray = prefix is not None and expected is None
+    return lab, lab == "partial" or (stray and lab != "incorrect")
+
+
 def label(gold_fact, generated):
     sentences = [s for s in split_sentences(generated) if s.lower() not in ("yes.", "no.")]
     answer = next((s for s in sentences if classify(s)), None)
@@ -68,10 +111,10 @@ def main():
             if r["set"] != "qa_train"]
     out = []
     for r in rows:
-        lab = label(r["gold_fact"], r["generated"])
+        lab, review = score(r["question"], r["gold_fact"], r["generated"])
         out.append({"model": r["model"], "set": r["set"], "question": r["question"],
                     "reference": r["reference"], "generated": r["generated"],
-                    "rubric_label": lab, "needs_review": "yes" if lab == "partial" else ""})
+                    "rubric_label": lab, "needs_review": "yes" if review else ""})
     with open("results/eval_rubric.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(out[0].keys()))
         w.writeheader()
