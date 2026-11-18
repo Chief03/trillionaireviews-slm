@@ -14,6 +14,6 @@ step 2000,test,0.058,1.0597,0.977,10829
 "pretrained (best, step 1800)",train,0.0373,1.038,0.9852,83338
 "pretrained (best, step 1800)",val,0.0575,1.0592,0.9772,10520
 "pretrained (best, step 1800)",test,0.0566,1.0582,0.9775,10829
-fine-tuned,train,0.1863,1.2047,0.955,83338
-fine-tuned,val,0.2143,1.239,0.9511,10520
-fine-tuned,test,0.2155,1.2405,0.9465,10829
+fine-tuned,train,0.4319,1.5403,0.9032,83338
+fine-tuned,val,0.4841,1.6227,0.8946,10520
+fine-tuned,test,0.4793,1.6149,0.8935,10829

@@ -123,25 +123,25 @@
   {
    "checkpoint": "fine-tuned",
    "split": "train",
-   "loss": 0.1863,
-   "perplexity": 1.2047,
-   "next_char_accuracy": 0.955,
+   "loss": 0.4319,
+   "perplexity": 1.5403,
+   "next_char_accuracy": 0.9032,
    "tokens": 83338
   },
   {
    "checkpoint": "fine-tuned",
    "split": "val",
-   "loss": 0.2143,
-   "perplexity": 1.239,
-   "next_char_accuracy": 0.9511,
+   "loss": 0.4841,
+   "perplexity": 1.6227,
+   "next_char_accuracy": 0.8946,
    "tokens": 10520
   },
   {
    "checkpoint": "fine-tuned",
    "split": "test",
-   "loss": 0.2155,
-   "perplexity": 1.2405,
-   "next_char_accuracy": 0.9465,
+   "loss": 0.4793,
+   "perplexity": 1.6149,
+   "next_char_accuracy": 0.8935,
    "tokens": 10829
   }
  ],
@@ -185,43 +185,43 @@
    "model": "fine-tuned",
    "set": "qa_train",
    "n": 96,
-   "correct": 0.5104,
-   "mentions": 0.5104,
-   "exact": 0.4271,
-   "verbatim": 1.0
+   "correct": 0.8646,
+   "mentions": 0.8646,
+   "exact": 0.7812,
+   "verbatim": 0.9271
   },
   {
    "model": "fine-tuned",
    "set": "qa_val",
    "n": 24,
-   "correct": 0.25,
-   "mentions": 0.25,
-   "exact": 0.0417,
-   "verbatim": 0.5833
+   "correct": 0.5417,
+   "mentions": 0.5417,
+   "exact": 0.125,
+   "verbatim": 0.4583
   },
   {
    "model": "fine-tuned",
    "set": "qa_test",
    "n": 36,
-   "correct": 0.2222,
-   "mentions": 0.2222,
-   "exact": 0.0833,
-   "verbatim": 1.0
+   "correct": 0.5,
+   "mentions": 0.5,
+   "exact": 0.25,
+   "verbatim": 0.6111
   }
  ],
- "finetuned_checkpoint_step": 75,
+ "finetuned_checkpoint_step": 450,
  "finetuned_unseen_accuracy_per_fact": {
-  "deposit transfer": 0.2,
-  "free reschedule": 0.0,
-  "notice (48 h)": 0.2,
-  "late arrival": 0.0,
-  "deposit ($50)": 0.6,
+  "deposit transfer": 0.4,
+  "free reschedule": 0.6,
+  "notice (48 h)": 0.4,
+  "late arrival": 0.2,
+  "deposit ($50)": 0.8,
   "balance ($100)": 0.2,
-  "price ($150)": 0.4,
-  "advance (3 days)": 0.4,
-  "booking method": 0.0,
+  "price ($150)": 0.8,
+  "advance (3 days)": 0.8,
+  "booking method": 0.4,
   "duration (60 min)": 0.4,
-  "service": 0.0,
+  "service": 0.8,
   "location": 0.4
  }
 }
