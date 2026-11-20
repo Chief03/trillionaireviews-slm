@@ -1,36 +1,3 @@
-"""
-Research investigation (Member 4).
-
-Research question:
-    How reliably can a small character-level Transformer reproduce the facts
-    in its training data, and what does that reliability depend on?
-
-Three controlled experiments, each changing one thing:
-
-  A. Training stage     Fact completion at the saved pretraining checkpoints
-     (--part stage)     (steps 500, 1000, 1500, 2000), for sentence openings
-                        seen in the corpus and for novel openings.
-
-  B. Temperature        Fact completion (pretrained model) and question
-     (--part temp)      answering (fine-tuned model) sampled 20 / 5 times per
-                        prompt at temperatures from 0 to 2.
-
-  C. Fine-tuning length Repeats the fine-tuning run in memory with the same
-     (--part finetune)  settings and seed as finetune.py, and measures answer
-                        accuracy every 25 steps. This shows whether the
-                        checkpoint with the lowest validation loss is also the
-                        one that answers best. No checkpoint in checkpoints/
-                        is modified.
-
-Run:
-    python investigate.py              # all three parts (about 35 min on CPU)
-    python investigate.py --part temp  # one part
-
-Outputs (results/):
-    invest_stage.csv / .png      invest_temperature.csv / .png
-    invest_finetune.csv / .png   invest_temperature_examples.txt
-"""
-
 import argparse
 import csv
 import os
