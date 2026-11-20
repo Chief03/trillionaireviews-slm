@@ -1,36 +1,3 @@
-"""
-Evaluation of the pretrained and fine-tuned models (Member 4).
-
-Run:
-    python evaluate.py
-
-Nothing is trained here. The script only loads the saved checkpoints and
-measures them, so it can be re-run at any time and gives the same numbers
-(greedy decoding, fixed seeds).
-
-Parts:
-  1. Held-out loss      Cross-entropy, perplexity and next-character accuracy
-                        on train / val / test for every saved checkpoint.
-  2. Text generation    Samples from the pretrained model for several prompts.
-  3. Fact completion    Does the pretrained model finish a statement with the
-                        right fact? Uses sentence openings copied from the
-                        corpus ("seen") and openings we wrote ourselves that
-                        never occur in the corpus ("novel").
-  4. Question answering The same questions are given to the pretrained and the
-                        fine-tuned model:
-                          qa_train.jsonl  96 questions used in fine-tuning
-                          qa_val.jsonl    24 unseen wordings (also used to pick
-                                          the fine-tuning checkpoint)
-                          qa_test.jsonl   36 unseen wordings written for this
-                                          evaluation, never used before
-
-Outputs (all in results/):
-    eval_loss.csv            eval_summary.json
-    eval_samples.txt         eval_completion.csv
-    eval_qa.csv              eval_qa_summary.csv
-    eval_qa_accuracy.png     eval_qa_confusion.png
-"""
-
 import csv
 import json
 import math
