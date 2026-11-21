@@ -77,6 +77,7 @@ python ask.py --complete "Each session lasts"
 # Turn on sampling (default is greedy, which is what every reported result uses)
 python ask.py --temperature 0.8 --top-k 20 "How much is the deposit?"
 ```
+Sampling is random and makes answers less reliable (see report Section 7). All reported results use greedy decoding.
 
 ### Example inputs
 
@@ -85,7 +86,8 @@ python ask.py --temperature 0.8 --top-k 20 "How much is the deposit?"
 | `How early do I have to book?` | `Sessions must be booked at least three days in advance.` |
 | `Where is the session held?` | `Sessions take place at Trillionaireviews Studio.` |
 | `How long is a portrait session?` | `The duration of a portrait session is one hour.` |
-| `--complete "Each session lasts"` | `Each session lasts 60 minutes. The scheduled finish time remains unchanged if the client is late.` |
+| `--complete "Each session lasts"` | `60 minutes. The scheduled finish time remains unchanged if the client is late. This leaves less time for the session. T` |
+Completions stop at a fixed length, so they can end mid-word.
 
 Outputs can differ slightly from this table. Greedy decoding is deterministic, but small numeric differences across PyTorch versions can change a borderline character.
 
