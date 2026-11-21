@@ -87,6 +87,8 @@ Sampling is random and makes answers less reliable (see report Section 7). All r
 | `Where is the session held?` | `Sessions take place at Trillionaireviews Studio.` |
 | `How long is a portrait session?` | `The duration of a portrait session is one hour.` |
 | `--complete "Each session lasts"` | `60 minutes. The scheduled finish time remains unchanged if the client is late. This leaves less time for the session. T` |
+
+
 Completions stop at a fixed length, so they can end mid-word.
 Outputs can differ slightly from this table. Greedy decoding is deterministic, but small numeric differences across PyTorch versions can change a borderline character.
 
