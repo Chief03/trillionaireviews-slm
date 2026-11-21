@@ -88,7 +88,6 @@ Sampling is random and makes answers less reliable (see report Section 7). All r
 | `How long is a portrait session?` | `The duration of a portrait session is one hour.` |
 | `--complete "Each session lasts"` | `60 minutes. The scheduled finish time remains unchanged if the client is late. This leaves less time for the session. T` |
 Completions stop at a fixed length, so they can end mid-word.
-
 Outputs can differ slightly from this table. Greedy decoding is deterministic, but small numeric differences across PyTorch versions can change a borderline character.
 
 Try questions that are not in the training files. For example, `Can I move my appointment to next week?` was never used in training. Expect the model to answer with a sentence from the training answers, and to get the fact wrong more than half the time on unseen wordings (44% fully correct on our 36 test questions).
