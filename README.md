@@ -18,7 +18,7 @@ Both checkpoints are included, so you can run and compare them without retrainin
 
 | Item | Requirement |
 |---|---|
-| Python | 3.10 or newer (developed on 3.14) |
+| Python | 3.10 or newer (developed on 3.12) |
 | Packages | `torch>=2.2`, `numpy<2`, `matplotlib` (see `requirements.txt`) |
 | Hardware | **CPU only is sufficient.** No GPU needed. |
 | Memory / disk | Under 1 GB RAM for inference; each checkpoint is about 3.4 MB |
