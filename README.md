@@ -139,6 +139,7 @@ python investigate.py                                               # checkpoint
 
 Re-running `train.py` and `finetune.py` overwrites the files in `checkpoints/`. Copy them first if you want to keep the submitted versions.
 
+Only run this if you are retraining from scratch. The submitted checkpoints need the included tokenizer.json.
 ---
 
 ## 6. Repository layout
